@@ -239,7 +239,7 @@ export default function Home() {
             <p className="hero-trust">{t.serviceIntro}</p>
           </div>
           <p className="hero-ghost" aria-hidden="true">GDM</p>
-          <img className="hero-car" src="/hero-gdm-detailing.png" alt="Coupé blu impeccabilmente rifinita" />
+          <img className="hero-car" src="/hero-gdm-detailing-v2.png" alt="Coupé blu impeccabilmente rifinita" />
           <div className="hero-sweep" aria-hidden="true" />
         </div>
       </section>
