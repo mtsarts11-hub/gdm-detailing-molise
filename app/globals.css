@@ -116,7 +116,7 @@ h2 { margin-bottom: 20px; font-size: clamp(2.75rem, 4.4vw, 4.35rem); line-height
 .site-footer { padding: clamp(58px, 8vw, 104px) max(6.5vw, calc((100vw - 1240px) / 2)) 28px; background: #09284f; color: #fff; }
 .footer-grid { display: grid; grid-template-columns: minmax(220px, 1.55fr) .7fr 1fr 1.1fr .95fr; gap: clamp(28px, 4.2vw, 66px); padding-bottom: clamp(42px, 6vw, 72px); border-bottom: 1px solid rgba(206, 231, 255, .18); }
 .footer-intro { max-width: 290px; }.footer-intro > p { margin: 22px 0 25px; color: #b7cde4; font-size: 13px; line-height: 1.7; }
-.footer-brand { display: inline-grid; color: #fff; line-height: .74; }.footer-brand strong { font-family: "Barlow Condensed", sans-serif; font-size: 68px; letter-spacing: -.08em; }.footer-brand span { margin-left: 3px; color: #71c4ff; font-size: 10px; font-weight: 800; letter-spacing: .43em; }
+.footer-logo { display: block; width: 220px; height: auto; margin: -18px -15px -13px; }
 .footer-book { min-height: 44px; padding: 0 18px; font-size: 12px; }
 .footer-title { margin: 3px 0 17px; color: #7fc8ff; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 .footer-column { display: flex; flex-direction: column; align-items: flex-start; gap: 11px; }.footer-column > p:not(.footer-title) { margin: 0; color: #d6e5f4; font-size: 13px; line-height: 1.5; }

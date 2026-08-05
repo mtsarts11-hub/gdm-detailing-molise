@@ -357,7 +357,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-grid">
           <div className="footer-intro">
-            <div className="footer-brand" aria-label="GDM Detailing"><strong>GDM</strong><span>DETAILING</span></div>
+            <img className="footer-logo" src="/images/gdm-footer-logo.png" alt="GDM Detailing" />
             <p>{t.footerIntro}</p>
             <a className="button button-primary footer-book" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
           </div>
