@@ -344,7 +344,23 @@ export default function Home() {
       </section>
 
       <section className="contact-section section" id="contact">
-        <div className="contact-heading"><p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p></div>
+        <div className="contact-heading">
+          <p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p>
+          <div className="contact-channels" aria-label={t.footerContact}>
+            <a className="contact-channel instagram" href="https://www.instagram.com/gdmdetailing/" target="_blank" rel="noreferrer">
+              <span className="contact-channel-icon"><img src="https://cdn.simpleicons.org/instagram/C13584" alt="" /></span>
+              <span><small>{t.footerInstagram}</small><strong>@gdmdetailing</strong></span><b aria-hidden="true">↗</b>
+            </a>
+            <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">
+              <span className="contact-channel-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" /></span>
+              <span><small>{t.footerWhatsapp}</small><strong>+39 320 974 5901</strong></span><b aria-hidden="true">↗</b>
+            </a>
+            <a className="contact-channel phone" href="tel:+393209745901">
+              <span className="contact-channel-icon" aria-hidden="true">☎</span>
+              <span><small>{t.footerPhone}</small><strong>+39 320 974 5901</strong></span><b aria-hidden="true">↗</b>
+            </a>
+          </div>
+        </div>
         <form onSubmit={sendToWhatsApp} className="contact-form">
           <label><span>{t.name}</span><input required name="name" autoComplete="name" /></label>
           <label><span>{t.email}</span><input required name="email" type="email" autoComplete="email" /></label>
