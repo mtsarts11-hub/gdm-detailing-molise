@@ -36,8 +36,10 @@ const copy = {
     beforeEyebrow: "PRIMA / DOPO",
     beforeTitle: "Il cambiamento si vede.",
     beforeText:
-      "Stiamo preparando una selezione di confronti verificati, per raccontare ogni trasformazione con la stessa trasparenza con cui lavoriamo.",
-    comingSoon: "Confronti verificati in arrivo",
+      "Muovi il cursore: la stessa Audi, prima con una leggera patina da strada e poi restituita alla sua profondità originale.",
+    beforeHint: "Trascina per confrontare",
+    beforeLabel: "Prima",
+    afterLabel: "Dopo",
     processEyebrow: "IL NOSTRO METODO",
     processTitle: "Come lavoriamo",
     locationEyebrow: "DOVE SIAMO",
@@ -56,6 +58,17 @@ const copy = {
     submit: "Invia su WhatsApp",
     privacy: "Inviando, accetti di essere ricontattato in merito alla tua richiesta.",
     footerLine: "© 2026 GDM Detailing. Tutti i diritti riservati.",
+    footerIntro: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
+    footerNavigation: "Esplora",
+    footerServices: "Trattamenti",
+    footerContact: "Contatti",
+    footerVisit: "Dove lavoriamo",
+    footerArea: "Molise e dintorni",
+    footerAppointment: "Riceviamo su appuntamento",
+    footerInstagram: "Seguici su Instagram",
+    footerPhone: "Chiamaci",
+    footerWhatsapp: "Scrivici su WhatsApp",
+    footerMap: "Apri la mappa",
     privacyLink: "Privacy",
     cookieLink: "Cookie",
     close: "Chiudi",
@@ -87,8 +100,10 @@ const copy = {
     beforeEyebrow: "BEFORE / AFTER",
     beforeTitle: "The difference is visible.",
     beforeText:
-      "We are preparing a selection of verified comparisons, so every transformation is told with the same transparency we bring to our work.",
-    comingSoon: "Verified comparisons coming soon",
+      "Move the slider: the same Audi, first with a light film of road dust, then restored to its original depth and finish.",
+    beforeHint: "Drag to compare",
+    beforeLabel: "Before",
+    afterLabel: "After",
     processEyebrow: "OUR METHOD",
     processTitle: "How we work",
     locationEyebrow: "LOCATION",
@@ -107,6 +122,17 @@ const copy = {
     submit: "Send via WhatsApp",
     privacy: "By sending, you agree to be contacted about your request.",
     footerLine: "© 2026 GDM Detailing. All rights reserved.",
+    footerIntro: "Car and motorcycle detailing, ceramic treatments and paint correction in Molise.",
+    footerNavigation: "Explore",
+    footerServices: "Treatments",
+    footerContact: "Contact",
+    footerVisit: "Where we work",
+    footerArea: "Molise and surrounding areas",
+    footerAppointment: "By appointment only",
+    footerInstagram: "Follow us on Instagram",
+    footerPhone: "Call us",
+    footerWhatsapp: "Message us on WhatsApp",
+    footerMap: "Open the map",
     privacyLink: "Privacy",
     cookieLink: "Cookies",
     close: "Close",
@@ -147,6 +173,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
+  const [comparisonPosition, setComparisonPosition] = useState(50);
   const page = useRef<HTMLElement>(null);
   const t = copy[language];
 
@@ -289,10 +316,14 @@ export default function Home() {
           <h2>{t.beforeTitle}</h2>
           <p>{t.beforeText}</p>
         </div>
-        <div className="comparison-pending">
-          <div className="comparison-line" /><span className="pending-cross">↔</span>
-          <p>{t.comingSoon}</p>
-          <small>GDM · DETAILING</small>
+        <div className="comparison-viewer">
+          <img className="comparison-image comparison-after" src="/images/hr_23.jpg" alt={language === "it" ? "Audi A3 dopo il trattamento" : "Audi A3 after detailing"} />
+          <img className="comparison-image comparison-before" src="/images/before-audi-a3.png" alt="" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }} />
+          <span className="comparison-label comparison-label-before">{t.beforeLabel}</span>
+          <span className="comparison-label comparison-label-after">{t.afterLabel}</span>
+          <div className="comparison-handle" style={{ left: `${comparisonPosition}%` }} aria-hidden="true"><span>↔</span></div>
+          <input className="comparison-range" type="range" min="0" max="100" value={comparisonPosition} onChange={(event) => setComparisonPosition(Number(event.target.value))} aria-label={language === "it" ? "Confronto prima e dopo" : "Before and after comparison"} />
+          <p className="comparison-hint">{t.beforeHint}</p>
         </div>
       </section>
 
@@ -324,8 +355,33 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <div className="footer-brand"><strong>GDM</strong><span>DETAILING</span></div>
-        <div className="footer-links"><a href="https://www.instagram.com/gdmdetailing/" target="_blank" rel="noreferrer">Instagram ↗</a><a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">WhatsApp ↗</a><a href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} ↗</a></div>
+        <div className="footer-grid">
+          <div className="footer-intro">
+            <div className="footer-brand" aria-label="GDM Detailing"><strong>GDM</strong><span>DETAILING</span></div>
+            <p>{t.footerIntro}</p>
+            <a className="button button-primary footer-book" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
+          </div>
+          <div className="footer-column footer-nav">
+            <p className="footer-title">{t.footerNavigation}</p>
+            {t.nav.map((item, index) => <button key={item} onClick={() => scrollTo(navTargets[index])}>{item}</button>)}
+          </div>
+          <div className="footer-column footer-services">
+            <p className="footer-title">{t.footerServices}</p>
+            {services.map((service) => <p key={service.number}>{language === "it" ? service.it : service.en}</p>)}
+          </div>
+          <div className="footer-column footer-contact">
+            <p className="footer-title">{t.footerContact}</p>
+            <a href="tel:+393209745901">{t.footerPhone}<strong>+39 320 974 5901</strong></a>
+            <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">{t.footerWhatsapp}<strong>WhatsApp ↗</strong></a>
+            <a href="https://www.instagram.com/gdmdetailing/" target="_blank" rel="noreferrer">{t.footerInstagram}<strong>@gdmdetailing ↗</strong></a>
+          </div>
+          <div className="footer-column footer-visit">
+            <p className="footer-title">{t.footerVisit}</p>
+            <p>{t.footerArea}</p>
+            <p>{t.footerAppointment}</p>
+            <a href={MAP_URL} target="_blank" rel="noreferrer">{t.footerMap} ↗</a>
+          </div>
+        </div>
         <div className="footer-bottom"><p>{t.footerLine}</p><div><a href="#home">{t.privacyLink}</a><a href="#home">{t.cookieLink}</a></div></div>
       </footer>
 
