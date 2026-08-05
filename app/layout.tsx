@@ -12,6 +12,11 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase,
     title: "GDM Detailing | Molise",
     description: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
+    icons: {
+      icon: [{ url: "/favicon.png", type: "image/png" }],
+      shortcut: ["/favicon.png"],
+      apple: [{ url: "/favicon.png", type: "image/png" }],
+    },
     openGraph: {
       title: "GDM Detailing | La cura che la tua auto merita.",
       description: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
