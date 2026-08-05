@@ -161,6 +161,8 @@ const gallery = [
   { src: "/images/hr_25.jpg", alt: "Dettaglio frontale dell'auto", shape: "gallery-wide" },
 ];
 
+const GALLERY_PREVIEW_COUNT = 6;
+
 const steps = [
   { number: "01", it: "Ci racconti di cosa ha bisogno il tuo veicolo.", en: "Tell us what your vehicle needs." },
   { number: "02", it: "Valutiamo insieme il trattamento più adatto.", en: "Together, we assess the right treatment." },
@@ -173,11 +175,13 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
+  const [galleryExpanded, setGalleryExpanded] = useState(false);
   const [comparisonPosition, setComparisonPosition] = useState(50);
   const page = useRef<HTMLElement>(null);
   const t = copy[language];
 
   useEffect(() => {
+    let revealObserver: IntersectionObserver | undefined;
     const context = gsap.context(() => {
       gsap.fromTo(
         ".hero-copy > *",
@@ -194,9 +198,45 @@ export default function Home() {
         { scaleX: 0, transformOrigin: "right center" },
         { scaleX: 1, duration: 0.9, ease: "power3.out", delay: 0.35 },
       );
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const revealBlocks = gsap.utils.toArray<HTMLElement>("[data-scroll-reveal]");
+      const staggerBlocks = gsap.utils.toArray<HTMLElement>("[data-scroll-stagger]");
+      const blocks = [...revealBlocks, ...staggerBlocks];
+
+      staggerBlocks.forEach((block) => gsap.set(Array.from(block.children), { autoAlpha: 0, y: 26 }));
+      gsap.set(revealBlocks, { autoAlpha: 0, y: 26 });
+
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const block = entry.target as HTMLElement;
+          const targets = block.hasAttribute("data-scroll-stagger") ? Array.from(block.children) : [block];
+          gsap.to(targets, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.72,
+            stagger: block.hasAttribute("data-scroll-stagger") ? 0.1 : 0,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+          revealObserver?.unobserve(block);
+        });
+      }, { threshold: 0.14, rootMargin: "0px 0px -7%" });
+
+      blocks.forEach((block) => revealObserver?.observe(block));
     }, page);
-    return () => context.revert();
+    return () => {
+      revealObserver?.disconnect();
+      context.revert();
+    };
   }, [language]);
+
+  useEffect(() => {
+    if (!galleryExpanded || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.fromTo(".gallery-item.is-revealed", { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.62, stagger: 0.08, ease: "power3.out", overwrite: "auto" });
+  }, [galleryExpanded]);
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
@@ -224,6 +264,7 @@ export default function Home() {
   };
 
   const navTargets = ["home", "about", "services", "gallery", "contact"];
+  const visibleGallery = galleryExpanded ? gallery : gallery.slice(0, GALLERY_PREVIEW_COUNT);
 
   return (
     <main ref={page} className="site-shell">
@@ -274,14 +315,14 @@ export default function Home() {
       </section>
 
       <section className="service-reveal section" id="services">
-        <div className="section-intro compact-intro">
+        <div className="section-intro compact-intro" data-scroll-reveal>
           <p className="eyebrow">SERVIZI</p>
           <div><h2>{t.serviceTitle}</h2><p>{t.serviceText}</p></div>
         </div>
-        <button className="expand-button" aria-expanded={servicesOpen} onClick={() => setServicesOpen(!servicesOpen)}>
+        <button className="expand-button" data-scroll-reveal aria-expanded={servicesOpen} onClick={() => setServicesOpen(!servicesOpen)}>
           <span>{t.servicesCta}</span><b>{servicesOpen ? "−" : "+"}</b>
         </button>
-        <div className={servicesOpen ? "service-list is-open" : "service-list"}>
+        <div className={servicesOpen ? "service-list is-open" : "service-list"} data-scroll-stagger>
           {services.map((service) => <article key={service.number} className="service-item">
             <span>{service.number}</span><h3>{language === "it" ? service.it : service.en}</h3><p>{service.note}</p>
           </article>)}
@@ -289,8 +330,8 @@ export default function Home() {
       </section>
 
       <section className="about-section section" id="about">
-        <div className="about-image-wrap"><img src="/images/fotoabasobre.jpg" alt="Dettaglio del faro anteriore dopo il trattamento" /></div>
-        <div className="about-copy">
+        <div className="about-image-wrap" data-scroll-reveal><img src="/images/fotoabasobre.jpg" alt="Dettaglio del faro anteriore dopo il trattamento" /></div>
+        <div className="about-copy" data-scroll-reveal>
           <p className="eyebrow">{t.aboutEyebrow}</p>
           <h2>{t.aboutTitle}</h2>
           <p>{t.aboutText}</p>
@@ -299,24 +340,25 @@ export default function Home() {
       </section>
 
       <section className="gallery-section section" id="gallery">
-        <div className="section-intro">
+        <div className="section-intro" data-scroll-reveal>
           <p className="eyebrow">{t.galleryEyebrow}</p>
           <div><h2>{t.galleryTitle}</h2><p>{t.galleryText}</p></div>
         </div>
-        <div className="gallery-grid">
-          {gallery.map((item, index) => <button key={item.src} className={`gallery-item ${item.shape}`} onClick={() => setActiveImage(index)} aria-label={`${t.viewImage}: ${item.alt}`}>
+        <div className="gallery-grid" data-scroll-stagger>
+          {visibleGallery.map((item, index) => <button key={item.src} className={`gallery-item ${index >= GALLERY_PREVIEW_COUNT ? "is-revealed" : ""}`} onClick={() => setActiveImage(index)} aria-label={`${t.viewImage}: ${item.alt}`}>
             <img src={item.src} alt={item.alt} /><span>+</span>
           </button>)}
         </div>
+        {gallery.length > GALLERY_PREVIEW_COUNT && <button className="button button-ghost gallery-more" type="button" aria-expanded={galleryExpanded} onClick={() => setGalleryExpanded(!galleryExpanded)}>{galleryExpanded ? "Show less" : "See more"} <span>{galleryExpanded ? "↑" : "↓"}</span></button>}
       </section>
 
       <section className="comparison-section section">
-        <div className="comparison-copy">
+        <div className="comparison-copy" data-scroll-reveal>
           <p className="eyebrow">{t.beforeEyebrow}</p>
           <h2>{t.beforeTitle}</h2>
           <p>{t.beforeText}</p>
         </div>
-        <div className="comparison-viewer">
+        <div className="comparison-viewer" data-scroll-reveal>
           <img className="comparison-image comparison-after" src="/images/hr_23.jpg" alt={language === "it" ? "Audi A3 dopo il trattamento" : "Audi A3 after detailing"} />
           <img className="comparison-image comparison-before" src="/images/before-audi-a3.png" alt="" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }} />
           <span className="comparison-label comparison-label-before">{t.beforeLabel}</span>
@@ -328,23 +370,23 @@ export default function Home() {
       </section>
 
       <section className="process-section section" id="process">
-        <div className="section-intro compact-intro"><p className="eyebrow">{t.processEyebrow}</p><div><h2>{t.processTitle}</h2></div></div>
-        <div className="process-list">
+        <div className="section-intro compact-intro" data-scroll-reveal><p className="eyebrow">{t.processEyebrow}</p><div><h2>{t.processTitle}</h2></div></div>
+        <div className="process-list" data-scroll-stagger>
           {steps.map((step) => <article key={step.number} className="process-step"><span>{step.number}</span><p>{language === "it" ? step.it : step.en}</p></article>)}
         </div>
       </section>
 
       <section className="location-section section">
-        <div className="location-copy">
+        <div className="location-copy" data-scroll-reveal>
           <p className="eyebrow">{t.locationEyebrow}</p><h2>{t.locationTitle}</h2><p>{t.locationText}</p>
           <div className="rating"><strong>5,0</strong><span>★★★★★</span><small>Google · 2 recensioni</small></div>
           <a className="text-link" href={MAP_URL} target="_blank" rel="noreferrer">{t.mapLink} <span>↗</span></a>
         </div>
-        <div className="map-wrap"><iframe title="GDM Detailing location" src="https://www.google.com/maps?q=41.5978336,14.2337013&z=14&output=embed" loading="lazy" /></div>
+        <div className="map-wrap" data-scroll-reveal><iframe title="GDM Detailing location" src="https://www.google.com/maps?q=41.5978336,14.2337013&z=14&output=embed" loading="lazy" /></div>
       </section>
 
       <section className="contact-section section" id="contact">
-        <div className="contact-heading">
+        <div className="contact-heading" data-scroll-reveal>
           <p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p>
           <div className="contact-channels" aria-label={t.footerContact}>
             <a className="contact-channel instagram" href="https://www.instagram.com/gdmdetailing/" target="_blank" rel="noreferrer">
@@ -361,7 +403,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <form onSubmit={sendToWhatsApp} className="contact-form">
+        <form onSubmit={sendToWhatsApp} className="contact-form" data-scroll-reveal>
           <label><span>{t.name}</span><input required name="name" autoComplete="name" /></label>
           <label><span>{t.email}</span><input required name="email" type="email" autoComplete="email" /></label>
           <label><span>{t.phone}</span><input required name="phone" type="tel" autoComplete="tel" /></label>
