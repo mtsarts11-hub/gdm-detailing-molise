@@ -268,7 +268,7 @@ export default function Home() {
           <p className="hero-ghost" aria-hidden="true">GDM</p>
           <div className="hero-car-light" aria-hidden="true" />
           <div className="hero-car-ground" aria-hidden="true" />
-          <img className="hero-car" src="/hero-gdm-detailing-v2.png" alt="Coupé blu impeccabilmente rifinita" />
+          <img className="hero-car" src="/hero-gdm-detailing-v3.png" alt="Coupé blu impeccabilmente rifinita" />
           <div className="hero-sweep" aria-hidden="true" />
         </div>
       </section>
