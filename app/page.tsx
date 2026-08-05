@@ -203,7 +203,7 @@ export default function Home() {
       <section className="hero-frame" id="home">
         <header className="site-header">
           <button className="brand" aria-label="GDM Detailing home" onClick={() => scrollTo("home")}>
-            <img src="/images/wordmark_final_on_white.png" alt="GDM Detailing" />
+            <img src="/images/gdm-wordmark-redrawn.png" alt="GDM Detailing" />
           </button>
           <nav className="desktop-nav" aria-label="Main navigation">
             {t.nav.map((item, index) => (
@@ -239,6 +239,8 @@ export default function Home() {
             <p className="hero-trust">{t.serviceIntro}</p>
           </div>
           <p className="hero-ghost" aria-hidden="true">GDM</p>
+          <div className="hero-car-light" aria-hidden="true" />
+          <div className="hero-car-ground" aria-hidden="true" />
           <img className="hero-car" src="/hero-gdm-detailing-v2.png" alt="Coupé blu impeccabilmente rifinita" />
           <div className="hero-sweep" aria-hidden="true" />
         </div>
