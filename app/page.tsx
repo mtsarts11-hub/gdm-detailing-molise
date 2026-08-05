@@ -289,7 +289,7 @@ export default function Home() {
       </section>
 
       <section className="about-section section" id="about">
-        <div className="about-image-wrap"><img src="/images/hr_3.jpg" alt="Riflessi definiti su vernice nera" /></div>
+        <div className="about-image-wrap"><img src="/images/fotoabasobre.jpg" alt="Dettaglio del faro anteriore dopo il trattamento" /></div>
         <div className="about-copy">
           <p className="eyebrow">{t.aboutEyebrow}</p>
           <h2>{t.aboutTitle}</h2>
