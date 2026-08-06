@@ -395,14 +395,14 @@ body { background: #060607; }
 
 @media (min-width: 641px) {
   .hero-car {
-    right: -220px;
-    width: clamp(1180px, 77vw, 1460px);
+    right: -180px;
+    width: clamp(1320px, 85vw, 1620px);
   }
 
   .hero-car-light {
-    right: -210px;
-    width: clamp(1180px, 77vw, 1460px);
-    height: 390px;
+    right: -168px;
+    width: clamp(1320px, 85vw, 1620px);
+    height: 425px;
   }
 
   .hero-car-ground { width: clamp(980px, 66vw, 1210px); }
