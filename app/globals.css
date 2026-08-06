@@ -348,3 +348,32 @@ body { background: #060607; }
 @media (max-height: 720px) and (min-width: 641px) {
   .hero-content { padding-top: clamp(46px, 10vh, 82px); }
 }
+
+/* Desktop hero reset: a deliberately centered copy block and a commanding vehicle composition. */
+@media (min-width: 641px) {
+  .hero-content {
+    display: flex;
+    min-height: calc(100svh - 82px);
+    align-items: center;
+    padding: 0 clamp(22px, 9vw, 130px);
+  }
+
+  .hero-car {
+    right: -170px;
+    bottom: max(18px, 3.2%);
+    width: min(1120px, 88vw);
+  }
+
+  .hero-car-light {
+    right: -158px;
+    bottom: max(28px, 4.4%);
+    width: min(1120px, 88vw);
+    height: 350px;
+  }
+
+  .hero-car-ground {
+    right: -18px;
+    bottom: max(14px, 2.4%);
+    width: min(960px, 76vw);
+  }
+}
