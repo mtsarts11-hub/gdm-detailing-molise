@@ -202,6 +202,7 @@ export default function Home() {
   const [activeImage, setActiveImage] = useState<number | null>(null);
   const [galleryExpanded, setGalleryExpanded] = useState(false);
   const [comparisonPosition, setComparisonPosition] = useState(50);
+  const [headerPinned, setHeaderPinned] = useState(false);
   const page = useRef<HTMLElement>(null);
   const t = copy[language];
   const headerNavItems = language === "es"
@@ -342,6 +343,24 @@ export default function Home() {
   }, [galleryExpanded]);
 
   useEffect(() => {
+    const hero = document.getElementById("home");
+    if (!hero) return;
+
+    const updateHeaderPin = () => {
+      const nextPinned = hero.getBoundingClientRect().bottom <= 0;
+      setHeaderPinned((current) => current === nextPinned ? current : nextPinned);
+    };
+
+    updateHeaderPin();
+    window.addEventListener("scroll", updateHeaderPin, { passive: true });
+    window.addEventListener("resize", updateHeaderPin);
+    return () => {
+      window.removeEventListener("scroll", updateHeaderPin);
+      window.removeEventListener("resize", updateHeaderPin);
+    };
+  }, []);
+
+  useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       if (activeImage === null) return;
       if (event.key === "Escape") setActiveImage(null);
@@ -378,7 +397,7 @@ export default function Home() {
         <div className="hero-overlay hero-overlay-horizontal" aria-hidden="true" />
         <div className="hero-overlay hero-overlay-top" aria-hidden="true" />
         <div className="hero-overlay hero-overlay-vignette" aria-hidden="true" />
-        <header className="site-header">
+        <header className={headerPinned ? "site-header is-pinned" : "site-header"}>
           <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
             <img src="/images/vdetail/vdetail-logo-transparent.png" alt="V Detail Center" />
           </button>
@@ -411,7 +430,7 @@ export default function Home() {
               <span className="hero-title-line">Valladolid</span>
             </h1>
             <p className="hero-description">{heroDescription}</p>
-            <button className="hero-primary-cta" onClick={() => scrollTo("services")}>{heroCta}</button>
+            <button className={language === "en" ? "hero-primary-cta is-english" : "hero-primary-cta"} onClick={() => scrollTo("services")}><span>{heroCta}</span></button>
           </div>
         </div>
       </section>
