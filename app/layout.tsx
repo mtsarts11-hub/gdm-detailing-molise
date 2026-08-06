@@ -23,27 +23,27 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase,
-    title: "GDM Detailing | Molise",
-    description: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
+    title: "V Detail Center | Detailing profesional en Valladolid",
+    description: "Detailing profesional, protección cerámica, PPF y corrección de pintura en Valladolid.",
     icons: {
-      icon: [{ url: "/favicon.png", type: "image/png" }],
-      shortcut: ["/favicon.png"],
-      apple: [{ url: "/favicon.png", type: "image/png" }],
+      icon: [{ url: "/images/vdetail/vdetail-logo.jpg", type: "image/jpeg" }],
+      shortcut: ["/images/vdetail/vdetail-logo.jpg"],
+      apple: [{ url: "/images/vdetail/vdetail-logo.jpg", type: "image/jpeg" }],
     },
     openGraph: {
-      title: "GDM Detailing | La cura che la tua auto merita.",
-      description: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
-      images: [{ url: "/og.png", width: 1200, height: 630, alt: "GDM Detailing" }],
+      title: "V Detail Center | Detailing profesional en Valladolid",
+      description: "Detailing profesional, protección cerámica, PPF y corrección de pintura en Valladolid.",
+      images: [{ url: "/images/vdetail/vdetail-bmw-turquoise-after.jpg", width: 1080, height: 1080, alt: "BMW tratado por V Detail Center" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "GDM Detailing | La cura che la tua auto merita.",
-      description: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
-      images: ["/og.png"],
+      title: "V Detail Center | Detailing profesional en Valladolid",
+      description: "Detailing profesional, protección cerámica, PPF y corrección de pintura en Valladolid.",
+      images: ["/images/vdetail/vdetail-bmw-turquoise-after.jpg"],
     },
   };
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="it"><body className={`${dmSans.variable} ${barlowCondensed.variable}`}>{children}</body></html>;
+  return <html lang="es"><body className={`${dmSans.variable} ${barlowCondensed.variable}`}>{children}</body></html>;
 }

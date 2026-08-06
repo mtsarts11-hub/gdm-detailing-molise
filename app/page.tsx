@@ -3,118 +3,127 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-type Language = "it" | "en";
+type Language = "es" | "en";
 
-const BOOKING_URL = "https://simplybook.me/";
-const WHATSAPP_NUMBER = "393209745901";
+const WHATSAPP_NUMBER = "34611577641";
+const BOOKING_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola V Detail Center, quiero solicitar una cita.")}`;
 const MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=Ad+Agnone+Auto+Service%2C+Viale+Castelnuovo+69%2C+Montenero+di+Bisaccia";
+  "https://www.google.com/maps/search/?api=1&query=C.+de+la+Zanfona%2C+4%2C+Nave+2.30%2C+47012+Valladolid%2C+Espa%C3%B1a";
 const MAP_EMBED_URL =
-  "https://www.google.com/maps?q=Ad+Agnone+Auto+Service%2C+Viale+Castelnuovo+69%2C+Montenero+di+Bisaccia&z=16&output=embed";
+  "https://www.google.com/maps?q=C.+de+la+Zanfona%2C+4%2C+Nave+2.30%2C+47012+Valladolid%2C+Espa%C3%B1a&z=16&output=embed";
+const INSTAGRAM_URL = "https://www.instagram.com/vdetailcenter/";
 
 const copy = {
-  it: {
-    nav: ["Home", "Chi siamo", "Servizi", "Galleria", "Contatti"],
-    book: "Prenota ora",
-    menu: "Apri menu",
-    eyebrow: "DETAILING AUTO E MOTO · MOLISE",
-    heroTitle: "La cura che la tua auto merita.",
+  es: {
+    nav: ["Inicio", "Nosotros", "Servicios", "Galería", "Contacto"],
+    book: "Solicitar cita",
+    menu: "Abrir menú",
+    eyebrow: "DETAILING PROFESIONAL · VALLADOLID",
+    heroTitle: "El detalle que tu vehículo merece.",
     heroText:
-      "Dalla correzione della vernice alla protezione ceramica, trattiamo ogni dettaglio con la precisione che la tua auto merita.",
-    servicesCta: "Scopri i trattamenti",
-    serviceIntro: "Auto · Moto · Protezione · Lucidatura",
-    serviceTitle: "Un trattamento, mai uno standard.",
+      "Protección cerámica, PPF, corrección de pintura y acabado premium para cuidar cada superficie de tu vehículo.",
+    servicesEyebrow: "SERVICIOS",
+    servicesCta: "Ver tratamientos",
+    serviceIntro: "DETAILING · PPF · CERÁMICA · PULIDO",
+    serviceTitle: "Un tratamiento, hecho a medida.",
     serviceText:
-      "Ogni superficie, ogni veicolo e ogni esigenza meritano una valutazione su misura.",
-    aboutEyebrow: "GDM DETAILING",
-    aboutTitle: "Precisione, protezione, presenza.",
+      "Cada vehículo y cada superficie requieren una valoración profesional y una atención precisa.",
+    aboutEyebrow: "V DETAIL CENTER",
+    aboutTitle: "Cuidado profesional. Resultado premium.",
     aboutText:
-      "Non è un semplice lavaggio. È un trattamento studiato per valorizzare le superfici, proteggere nel tempo e riportare ogni veicolo al suo massimo splendore.",
-    aboutNote: "Lavoriamo per far parlare la qualità, prima delle parole.",
-    galleryEyebrow: "GALLERIA",
-    galleryTitle: "Lavori che parlano da sé.",
-    galleryText: "Dettagli, riflessi e finiture: guarda da vicino il risultato.",
-    viewImage: "Apri immagine",
-    beforeEyebrow: "PRIMA / DOPO",
-    beforeTitle: "Il cambiamento si vede.",
+      "Trabajamos cada vehículo con una mirada rigurosa: limpieza, corrección y protección para que el acabado vuelva a hablar por sí solo.",
+    aboutNote: "Atendemos exclusivamente con cita previa.",
+    galleryEyebrow: "GALERÍA",
+    galleryTitle: "Trabajos que hablan por sí solos.",
+    galleryText: "Acabados, reflejos y detalles de vehículos tratados en nuestro centro.",
+    viewImage: "Abrir imagen",
+    showMore: "Ver más",
+    showLess: "Ver menos",
+    beforeEyebrow: "ANTES / DESPUÉS",
+    beforeTitle: "El cambio se nota.",
     beforeText:
-      "Muovi il cursore: la stessa Audi, prima con una leggera patina da strada e poi restituita alla sua profondità originale.",
-    beforeHint: "Trascina per confrontare",
-    beforeLabel: "Prima",
-    afterLabel: "Dopo",
-    processEyebrow: "IL NOSTRO METODO",
-    processTitle: "Come lavoriamo",
-    locationEyebrow: "DOVE SIAMO",
-    locationTitle: "Ci trovi in Molise.",
+      "Desliza para ver el mismo BMW antes, con suciedad ligera de uso, y después de su puesta a punto.",
+    beforeHint: "Desliza para comparar",
+    beforeLabel: "Antes",
+    afterLabel: "Después",
+    processEyebrow: "NUESTRO MÉTODO",
+    processTitle: "Cómo trabajamos",
+    locationEyebrow: "DÓNDE ESTAMOS",
+    locationTitle: "Valladolid, con cita previa.",
     locationText:
-      "Riceviamo su appuntamento e lavoriamo anche nei dintorni. Scrivici o chiamaci per organizzare la tua visita.",
-    mapLink: "Apri in Google Maps",
-    contactEyebrow: "CONTATTI",
-    contactTitle: "Parliamo della tua auto.",
+      "Estamos en C. de la Zanfona, 4, Nave 2.30. Escríbenos o llámanos para solicitar tu cita.",
+    mapLink: "Abrir en Google Maps",
+    ratingLabel: "Google · 96 reseñas",
+    contactEyebrow: "CONTACTO",
+    contactTitle: "Hablemos de tu vehículo.",
     contactText:
-      "Raccontaci cosa vuoi migliorare: ti risponderemo per valutare insieme il trattamento giusto.",
-    name: "Nome",
-    email: "Email",
-    phone: "Telefono",
-    message: "Descrivi la tua richiesta",
-    submit: "Invia su WhatsApp",
-    privacy: "Inviando, accetti di essere ricontattato in merito alla tua richiesta.",
-    footerLine: "© 2026 GDM Detailing. Tutti i diritti riservati.",
-    footerIntro: "Detailing auto e moto, trattamenti ceramici e lucidatura correttiva in Molise.",
-    footerNavigation: "Esplora",
-    footerServices: "Trattamenti",
-    footerContact: "Contatti",
-    footerVisit: "Dove lavoriamo",
-    footerArea: "Molise e dintorni",
-    footerAppointment: "Riceviamo su appuntamento",
-    footerInstagram: "Seguici su Instagram",
-    footerPhone: "Chiamaci",
-    footerWhatsapp: "Scrivici su WhatsApp",
-    footerMap: "Apri la mappa",
-    privacyLink: "Privacy",
-    cookieLink: "Cookie",
-    close: "Chiudi",
-    previous: "Precedente",
-    next: "Successiva",
+      "Cuéntanos qué te gustaría mejorar. Te ayudaremos a valorar el tratamiento adecuado.",
+    name: "Nombre",
+    email: "Correo electrónico",
+    phone: "Teléfono",
+    message: "Describe tu solicitud",
+    submit: "Enviar por WhatsApp",
+    privacy: "Al enviar tus datos, aceptas que te contactemos sobre tu solicitud.",
+    footerLine: "© 2026 V Detail Center. Todos los derechos reservados.",
+    footerIntro: "Detailing profesional, protección cerámica, PPF y corrección de pintura en Valladolid.",
+    footerNavigation: "Explora",
+    footerServices: "Tratamientos",
+    footerContact: "Contacto",
+    footerVisit: "Dónde encontrarnos",
+    footerArea: "Valladolid",
+    footerAppointment: "Atención únicamente con cita previa",
+    footerInstagram: "Síguenos en Instagram",
+    footerPhone: "Llámanos",
+    footerWhatsapp: "Escríbenos por WhatsApp",
+    footerMap: "Abrir el mapa",
+    privacyLink: "Privacidad",
+    cookieLink: "Cookies",
+    close: "Cerrar",
+    previous: "Anterior",
+    next: "Siguiente",
   },
   en: {
     nav: ["Home", "About", "Services", "Gallery", "Contact"],
-    book: "Book now",
+    book: "Request an appointment",
     menu: "Open menu",
-    eyebrow: "AUTO & MOTORCYCLE DETAILING · MOLISE",
-    heroTitle: "The care your car deserves.",
+    eyebrow: "PROFESSIONAL DETAILING · VALLADOLID",
+    heroTitle: "The detail your vehicle deserves.",
     heroText:
-      "From paint correction to ceramic protection, every detail is treated with the precision your vehicle deserves.",
-    servicesCta: "Explore treatments",
-    serviceIntro: "Cars · Motorcycles · Protection · Polishing",
-    serviceTitle: "One treatment, never a standard one.",
+      "Ceramic protection, PPF, paint correction and premium finishing for every surface of your vehicle.",
+    servicesEyebrow: "SERVICES",
+    servicesCta: "View treatments",
+    serviceIntro: "DETAILING · PPF · CERAMIC · POLISHING",
+    serviceTitle: "A treatment made to measure.",
     serviceText:
-      "Every surface, vehicle and need deserves an approach made to measure.",
-    aboutEyebrow: "GDM DETAILING",
-    aboutTitle: "Precision, protection, presence.",
+      "Every vehicle and every surface deserves a professional assessment and precise attention.",
+    aboutEyebrow: "V DETAIL CENTER",
+    aboutTitle: "Professional care. Premium result.",
     aboutText:
-      "It is not a simple wash. It is a considered treatment designed to enhance surfaces, protect them over time and return every vehicle to its finest condition.",
-    aboutNote: "We let quality speak before words do.",
+      "Every vehicle is handled with a rigorous eye: cleaning, correction and protection so the finish can speak for itself.",
+    aboutNote: "We work by appointment only.",
     galleryEyebrow: "GALLERY",
     galleryTitle: "Work that speaks for itself.",
-    galleryText: "Details, reflections and finishes: take a closer look at the result.",
+    galleryText: "Finishes, reflections and details from vehicles treated in our centre.",
     viewImage: "Open image",
+    showMore: "See more",
+    showLess: "Show less",
     beforeEyebrow: "BEFORE / AFTER",
     beforeTitle: "The difference is visible.",
     beforeText:
-      "Move the slider: the same Audi, first with a light film of road dust, then restored to its original depth and finish.",
+      "Move the slider to see the same BMW before, with light everyday road dust, and after its professional refresh.",
     beforeHint: "Drag to compare",
     beforeLabel: "Before",
     afterLabel: "After",
     processEyebrow: "OUR METHOD",
     processTitle: "How we work",
     locationEyebrow: "LOCATION",
-    locationTitle: "Find us in Molise.",
+    locationTitle: "Valladolid, by appointment.",
     locationText:
-      "We welcome clients by appointment and work across the surrounding area. Message or call us to arrange your visit.",
+      "Find us at C. de la Zanfona, 4, Nave 2.30. Message or call us to request your appointment.",
     mapLink: "Open in Google Maps",
+    ratingLabel: "Google · 96 reviews",
     contactEyebrow: "CONTACT",
-    contactTitle: "Let's talk about your car.",
+    contactTitle: "Let's talk about your vehicle.",
     contactText:
       "Tell us what you would like to improve. We will help you find the right treatment.",
     name: "Name",
@@ -123,13 +132,13 @@ const copy = {
     message: "Tell us about your request",
     submit: "Send via WhatsApp",
     privacy: "By sending, you agree to be contacted about your request.",
-    footerLine: "© 2026 GDM Detailing. All rights reserved.",
-    footerIntro: "Car and motorcycle detailing, ceramic treatments and paint correction in Molise.",
+    footerLine: "© 2026 V Detail Center. All rights reserved.",
+    footerIntro: "Professional detailing, ceramic protection, PPF and paint correction in Valladolid.",
     footerNavigation: "Explore",
     footerServices: "Treatments",
     footerContact: "Contact",
-    footerVisit: "Where we work",
-    footerArea: "Molise and surrounding areas",
+    footerVisit: "Where to find us",
+    footerArea: "Valladolid",
     footerAppointment: "By appointment only",
     footerInstagram: "Follow us on Instagram",
     footerPhone: "Call us",
@@ -144,36 +153,50 @@ const copy = {
 } as const;
 
 const services = [
-  { number: "01", it: "Trattamenti ceramici", en: "Ceramic treatments", note: "Protezione e profondità" },
-  { number: "02", it: "Lucidatura correttiva", en: "Paint correction", note: "Brillantezza controllata" },
-  { number: "03", it: "Trattamenti interni", en: "Interior treatments", note: "Cura in ogni materia" },
-  { number: "04", it: "Detailing auto e moto", en: "Car & motorcycle detailing", note: "Una finitura su misura" },
+  { number: "01", es: "Protección cerámica", en: "Ceramic protection", noteEs: "Cuidado y profundidad", noteEn: "Care and depth" },
+  { number: "02", es: "Corrección de pintura", en: "Paint correction", noteEs: "Brillo controlado", noteEn: "Controlled gloss" },
+  { number: "03", es: "Detailing interior", en: "Interior detailing", noteEs: "Atención a cada material", noteEn: "Care for every material" },
+  { number: "04", es: "PPF y acabado premium", en: "PPF and premium finish", noteEs: "Un acabado a medida", noteEn: "A finish made to measure" },
 ];
 
 const gallery = [
-  { src: "/images/hr_1.jpg", alt: "Audi grigia lucidata in officina", shape: "gallery-large" },
-  { src: "/images/hr_3.jpg", alt: "Riflesso su vernice nera", shape: "gallery-tall" },
-  { src: "/images/hr_4.jpg", alt: "Auto storica restaurata", shape: "gallery-wide" },
-  { src: "/images/hr_7.jpg", alt: "Cofano di automobile storica", shape: "gallery-tall" },
-  { src: "/images/hr_9.jpg", alt: "Auto nera con finitura lucida", shape: "gallery-large" },
-  { src: "/images/hr_14.jpg", alt: "Dettaglio di vernice scura", shape: "gallery-wide" },
-  { src: "/images/hr_17.jpg", alt: "Riflesso su carrozzeria blu", shape: "gallery-tall" },
-  { src: "/images/hr_18.jpg", alt: "Cofano con riflesso del cielo", shape: "gallery-large" },
-  { src: "/images/hr_23.jpg", alt: "Auto scura fotografata al tramonto", shape: "gallery-tall" },
-  { src: "/images/hr_25.jpg", alt: "Dettaglio frontale dell'auto", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-porsche-black.jpg", alt: "Porsche negro con acabado brillante", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-mustang-red.jpg", alt: "Ford Mustang rojo tratado en V Detail Center", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-bmw-x6-white.jpg", alt: "BMW X6 blanco con acabado cuidado", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-porsche-silver.jpg", alt: "Porsche plateado en el centro de detailing", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-bmw-black.jpg", alt: "BMW negro con pintura pulida", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-bmw-orange.jpg", alt: "BMW naranja con acabado premium", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-mercedes-amg-green.jpg", alt: "Mercedes AMG verde tratado", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-porsche-white.jpg", alt: "Porsche blanco con carrocería brillante", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-detailing-polish.jpg", alt: "Trabajo de pulido profesional", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-audi-grey.jpg", alt: "Audi gris preparado en el taller", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-audi-grille.jpg", alt: "Detalle frontal de Audi", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-audi-white.jpg", alt: "Audi blanco con acabado cuidado", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-porsche-dark.jpg", alt: "Porsche oscuro con reflejos definidos", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-mercedes-black.jpg", alt: "Mercedes negro con acabado brillante", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-bmw-front.jpg", alt: "Frontal de BMW tratado", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-porsche-night.jpg", alt: "Porsche negro en iluminación nocturna", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-bmw-sedan.jpg", alt: "BMW negro preparado por V Detail Center", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-red-workshop.jpg", alt: "Vehículo rojo en el taller", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-golf-white.jpg", alt: "Volkswagen Golf blanco tratado", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-suv-blue.jpg", alt: "SUV azul con acabado premium", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-cupra-white.jpg", alt: "Cupra blanco en V Detail Center", shape: "gallery-wide" },
+  { src: "/images/vdetail/gallery-audi-premium.jpg", alt: "Audi gris con acabado premium", shape: "gallery-tall" },
+  { src: "/images/vdetail/gallery-bmw-white.jpg", alt: "BMW blanco con carrocería pulida", shape: "gallery-large" },
+  { src: "/images/vdetail/gallery-porsche-white-highres.jpg", alt: "Porsche blanco fotografiado en detalle", shape: "gallery-wide" },
 ];
 
 const GALLERY_PREVIEW_COUNT = 6;
 
 const steps = [
-  { number: "01", it: "Ci racconti di cosa ha bisogno il tuo veicolo.", en: "Tell us what your vehicle needs." },
-  { number: "02", it: "Valutiamo insieme il trattamento più adatto.", en: "Together, we assess the right treatment." },
-  { number: "03", it: "Lavoriamo con cura, prodotti selezionati e attenzione ai dettagli.", en: "We work with care, selected products and attention to detail." },
-  { number: "04", it: "Ritiri un risultato che si vede, si tocca e dura.", en: "Collect a result you can see, feel and trust to last." },
+  { number: "01", es: "Cuéntanos qué necesita tu vehículo.", en: "Tell us what your vehicle needs." },
+  { number: "02", es: "Valoramos contigo el tratamiento más adecuado.", en: "Together, we assess the right treatment." },
+  { number: "03", es: "Trabajamos con precisión y atención a cada detalle.", en: "We work with precision and attention to every detail." },
+  { number: "04", es: "Recoges un resultado que se ve y se disfruta.", en: "Collect a result you can see and enjoy." },
 ];
 
 export default function Home() {
-  const [language, setLanguage] = useState<Language>("it");
+  const [language, setLanguage] = useState<Language>("es");
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [activeImage, setActiveImage] = useState<number | null>(null);
@@ -259,9 +282,9 @@ export default function Home() {
   const sendToWhatsApp = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const message = language === "it"
-      ? `Ciao GDM Detailing, sono ${form.get("name")}.\nEmail: ${form.get("email")}\nTelefono: ${form.get("phone")}\n\nRichiesta: ${form.get("message")}`
-      : `Hello GDM Detailing, I am ${form.get("name")}.\nEmail: ${form.get("email")}\nPhone: ${form.get("phone")}\n\nRequest: ${form.get("message")}`;
+    const message = language === "es"
+      ? `Hola V Detail Center, soy ${form.get("name")}\.\nCorreo electrónico: ${form.get("email")}\nTeléfono: ${form.get("phone")}\n\nSolicitud: ${form.get("message")}`
+      : `Hello V Detail Center, I am ${form.get("name")}\.\nEmail: ${form.get("email")}\nPhone: ${form.get("phone")}\n\nRequest: ${form.get("message")}`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
   };
 
@@ -272,8 +295,8 @@ export default function Home() {
     <main ref={page} className="site-shell">
       <section className="hero-frame" id="home">
         <header className="site-header">
-          <button className="brand" aria-label="GDM Detailing home" onClick={() => scrollTo("home")}>
-            <img src="/images/gdm-wordmark-redrawn.png" alt="GDM Detailing" />
+          <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
+            <img src="/images/vdetail/vdetail-logo-wordmark.jpg" alt="V Detail Center" />
           </button>
           <nav className="desktop-nav" aria-label="Main navigation">
             {t.nav.map((item, index) => (
@@ -282,7 +305,7 @@ export default function Home() {
           </nav>
           <div className="header-actions">
             <div className="language-switch" aria-label="Language selector">
-              <button className={language === "it" ? "active" : ""} onClick={() => setLanguage("it")}>IT</button>
+              <button className={language === "es" ? "active" : ""} onClick={() => setLanguage("es")}>ES</button>
               <span>/</span>
               <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
             </div>
@@ -300,7 +323,7 @@ export default function Home() {
         <div className="hero-content">
           <div className="hero-copy">
             <p className="eyebrow hero-eyebrow">{t.eyebrow}</p>
-            <h1>{language === "it" ? <>La cura che la <span className="hero-mobile-break">tua auto merita.</span></> : t.heroTitle}</h1>
+            <h1>{language === "es" ? <>El detalle que tu <span className="hero-mobile-break">vehículo merece.</span></> : t.heroTitle}</h1>
             <p className="hero-description">{t.heroText}</p>
             <div className="hero-buttons">
               <a className="button button-primary" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
@@ -308,17 +331,17 @@ export default function Home() {
             </div>
             <p className="hero-trust">{t.serviceIntro}</p>
           </div>
-          <p className="hero-ghost" aria-hidden="true">GDM</p>
+          <p className="hero-ghost" aria-hidden="true">VDC</p>
           <div className="hero-car-light" aria-hidden="true" />
           <div className="hero-car-ground" aria-hidden="true" />
-          <img className="hero-car" src="/hero-bmw-x6m-v1.png" alt="BMW X6 M blu impeccabilmente rifinita" />
+          <img className="hero-car" src="/hero-vdetail-bmw-m4-v3.png" alt="BMW M4 azul de V Detail Center" />
           <div className="hero-sweep" aria-hidden="true" />
         </div>
       </section>
 
       <section className="service-reveal section" id="services">
         <div className="section-intro compact-intro" data-scroll-reveal>
-          <p className="eyebrow">SERVIZI</p>
+          <p className="eyebrow">{t.servicesEyebrow}</p>
           <div><h2>{t.serviceTitle}</h2><p>{t.serviceText}</p></div>
         </div>
         <button className="expand-button" data-scroll-reveal aria-expanded={servicesOpen} onClick={() => setServicesOpen(!servicesOpen)}>
@@ -326,13 +349,13 @@ export default function Home() {
         </button>
         <div className={servicesOpen ? "service-list is-open" : "service-list"} data-scroll-stagger>
           {services.map((service) => <article key={service.number} className="service-item">
-            <span>{service.number}</span><h3>{language === "it" ? service.it : service.en}</h3><p>{service.note}</p>
+            <span>{service.number}</span><h3>{language === "es" ? service.es : service.en}</h3><p>{language === "es" ? service.noteEs : service.noteEn}</p>
           </article>)}
         </div>
       </section>
 
       <section className="about-section section" id="about">
-        <div className="about-image-wrap" data-scroll-reveal><img src="/images/fotoabasobre.jpg" alt="Dettaglio del faro anteriore dopo il trattamento" /></div>
+        <div className="about-image-wrap" data-scroll-reveal><img src="/images/vdetail/vdetail-workshop.jpg" alt="Instalaciones de V Detail Center en Valladolid" /></div>
         <div className="about-copy" data-scroll-reveal>
           <p className="eyebrow">{t.aboutEyebrow}</p>
           <h2>{t.aboutTitle}</h2>
@@ -351,7 +374,7 @@ export default function Home() {
             <img src={item.src} alt={item.alt} /><span>+</span>
           </button>)}
         </div>
-        {gallery.length > GALLERY_PREVIEW_COUNT && <button className="button button-ghost gallery-more" type="button" aria-expanded={galleryExpanded} onClick={() => setGalleryExpanded(!galleryExpanded)}>{galleryExpanded ? "Show less" : "See more"} <span>{galleryExpanded ? "↑" : "↓"}</span></button>}
+        {gallery.length > GALLERY_PREVIEW_COUNT && <button className="button button-ghost gallery-more" type="button" aria-expanded={galleryExpanded} onClick={() => setGalleryExpanded(!galleryExpanded)}>{galleryExpanded ? t.showLess : t.showMore} <span>{galleryExpanded ? "↑" : "↓"}</span></button>}
       </section>
 
       <section className="comparison-section section">
@@ -361,12 +384,12 @@ export default function Home() {
           <p>{t.beforeText}</p>
         </div>
         <div className="comparison-viewer" data-scroll-reveal>
-          <img className="comparison-image comparison-after" src="/images/hr_23.jpg" alt={language === "it" ? "Audi A3 dopo il trattamento" : "Audi A3 after detailing"} />
-          <img className="comparison-image comparison-before" src="/images/before-audi-a3.png" alt="" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }} />
+          <img className="comparison-image comparison-after" src="/images/vdetail/vdetail-bmw-turquoise-after.jpg" alt={language === "es" ? "BMW azul después de su puesta a punto en V Detail Center" : "Blue BMW after its V Detail Center refresh"} />
+          <img className="comparison-image comparison-before" src="/images/vdetail/vdetail-bmw-turquoise-before.jpg" alt="" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }} />
           <span className="comparison-label comparison-label-before">{t.beforeLabel}</span>
           <span className="comparison-label comparison-label-after">{t.afterLabel}</span>
           <div className="comparison-handle" style={{ left: `${comparisonPosition}%` }} aria-hidden="true"><span>↔</span></div>
-          <input className="comparison-range" type="range" min="0" max="100" value={comparisonPosition} onChange={(event) => setComparisonPosition(Number(event.target.value))} aria-label={language === "it" ? "Confronto prima e dopo" : "Before and after comparison"} />
+          <input className="comparison-range" type="range" min="0" max="100" value={comparisonPosition} onChange={(event) => setComparisonPosition(Number(event.target.value))} aria-label={language === "es" ? "Comparación antes y después" : "Before and after comparison"} />
           <p className="comparison-hint">{t.beforeHint}</p>
         </div>
       </section>
@@ -374,34 +397,34 @@ export default function Home() {
       <section className="process-section section" id="process">
         <div className="section-intro compact-intro" data-scroll-reveal><p className="eyebrow">{t.processEyebrow}</p><div><h2>{t.processTitle}</h2></div></div>
         <div className="process-list" data-scroll-stagger>
-          {steps.map((step) => <article key={step.number} className="process-step"><span>{step.number}</span><p>{language === "it" ? step.it : step.en}</p></article>)}
+          {steps.map((step) => <article key={step.number} className="process-step"><span>{step.number}</span><p>{language === "es" ? step.es : step.en}</p></article>)}
         </div>
       </section>
 
       <section className="location-section section">
         <div className="location-copy" data-scroll-reveal>
           <p className="eyebrow">{t.locationEyebrow}</p><h2>{t.locationTitle}</h2><p>{t.locationText}</p>
-          <div className="rating"><strong>5,0</strong><span>★★★★★</span><small>Google · 2 recensioni</small></div>
+          <div className="rating"><strong>4,9</strong><span>★★★★★</span><small>{t.ratingLabel}</small></div>
           <a className="text-link" href={MAP_URL} target="_blank" rel="noreferrer">{t.mapLink} <span>↗</span></a>
         </div>
-        <div className="map-wrap" data-scroll-reveal><iframe title="Ad Agnone Auto Service, Viale Castelnuovo 69, Montenero di Bisaccia" src={MAP_EMBED_URL} loading="lazy" /></div>
+        <div className="map-wrap" data-scroll-reveal><iframe title="V Detail Center, C. de la Zanfona 4, Valladolid" src={MAP_EMBED_URL} loading="lazy" /></div>
       </section>
 
       <section className="contact-section section" id="contact">
         <div className="contact-heading" data-scroll-reveal>
           <p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p>
           <div className="contact-channels" aria-label={t.footerContact}>
-            <a className="contact-channel instagram" href="https://www.instagram.com/gdmdetailing/" target="_blank" rel="noreferrer">
+            <a className="contact-channel instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
               <span className="contact-channel-icon"><img src="https://cdn.simpleicons.org/instagram/C13584" alt="" /></span>
-              <span><small>{t.footerInstagram}</small><strong>@gdmdetailing</strong></span><b aria-hidden="true">↗</b>
+              <span><small>{t.footerInstagram}</small><strong>@vdetailcenter</strong></span><b aria-hidden="true">↗</b>
             </a>
             <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">
               <span className="contact-channel-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" /></span>
-              <span><small>{t.footerWhatsapp}</small><strong>+39 320 974 5901</strong></span><b aria-hidden="true">↗</b>
+              <span><small>{t.footerWhatsapp}</small><strong>+34 611 57 76 41</strong></span><b aria-hidden="true">↗</b>
             </a>
-            <a className="contact-channel phone" href="tel:+393209745901">
+            <a className="contact-channel phone" href="tel:+34611577641">
               <span className="contact-channel-icon" aria-hidden="true">☎</span>
-              <span><small>{t.footerPhone}</small><strong>+39 320 974 5901</strong></span><b aria-hidden="true">↗</b>
+              <span><small>{t.footerPhone}</small><strong>+34 611 57 76 41</strong></span><b aria-hidden="true">↗</b>
             </a>
           </div>
         </div>
@@ -417,7 +440,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-grid">
           <div className="footer-intro">
-            <img className="footer-logo" src="/images/gdm-footer-logo.png" alt="GDM Detailing" />
+            <img className="footer-logo" src="/images/vdetail/vdetail-logo-wordmark.jpg" alt="V Detail Center" />
             <p>{t.footerIntro}</p>
             <a className="button button-primary footer-book" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
           </div>
@@ -427,13 +450,13 @@ export default function Home() {
           </div>
           <div className="footer-column footer-services">
             <p className="footer-title">{t.footerServices}</p>
-            {services.map((service) => <p key={service.number}>{language === "it" ? service.it : service.en}</p>)}
+            {services.map((service) => <p key={service.number}>{language === "es" ? service.es : service.en}</p>)}
           </div>
           <div className="footer-column footer-contact">
             <p className="footer-title">{t.footerContact}</p>
-            <a href="tel:+393209745901">{t.footerPhone}<strong>+39 320 974 5901</strong></a>
+            <a href="tel:+34611577641">{t.footerPhone}<strong>+34 611 57 76 41</strong></a>
             <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">{t.footerWhatsapp}<strong>WhatsApp ↗</strong></a>
-            <a href="https://www.instagram.com/gdmdetailing/" target="_blank" rel="noreferrer">{t.footerInstagram}<strong>@gdmdetailing ↗</strong></a>
+            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">{t.footerInstagram}<strong>@vdetailcenter ↗</strong></a>
           </div>
           <div className="footer-column footer-visit">
             <p className="footer-title">{t.footerVisit}</p>
@@ -445,7 +468,7 @@ export default function Home() {
         <div className="footer-bottom"><p>{t.footerLine}</p><div><a href="#home">{t.privacyLink}</a><a href="#home">{t.cookieLink}</a></div></div>
       </footer>
 
-      <a className="whatsapp-float" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" aria-label="WhatsApp GDM Detailing">
+      <a className="whatsapp-float" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" aria-label="Contactar V Detail Center por WhatsApp">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" />
       </a>
 
