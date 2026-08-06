@@ -300,7 +300,7 @@ export default function Home() {
         <div className="hero-content">
           <div className="hero-copy">
             <p className="eyebrow hero-eyebrow">{t.eyebrow}</p>
-            <h1>{t.heroTitle}</h1>
+            <h1>{language === "it" ? <>La cura che la <span className="hero-mobile-break">tua auto merita.</span></> : t.heroTitle}</h1>
             <p className="hero-description">{t.heroText}</p>
             <div className="hero-buttons">
               <a className="button button-primary" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>

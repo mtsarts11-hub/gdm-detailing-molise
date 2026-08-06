@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { Barlow_Condensed, DM_Sans } from "next/font/google";
 import "./globals.css";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  variable: "--font-barlow-condensed",
+  weight: ["500", "600", "700"],
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -32,5 +45,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="it"><body>{children}</body></html>;
+  return <html lang="it"><body className={`${dmSans.variable} ${barlowCondensed.variable}`}>{children}</body></html>;
 }
