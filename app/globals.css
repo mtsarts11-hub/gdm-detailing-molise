@@ -337,3 +337,14 @@ body { background: #060607; }
   .hero-car-light { width: min(780px, 135vh); bottom: max(31px, 8vh); }
   .hero-car-ground { width: min(670px, 116vh); bottom: max(20px, 5vh); }
 }
+
+/* Final hero composition: keep the premium car treatment, restore breathing room, and remove decorative lettering. */
+.hero-ghost { display: none; }
+
+@media (min-width: 641px) {
+  .hero-content { padding-top: calc(clamp(68px, 11vw, 145px) + clamp(22px, 2.2vw, 42px)); }
+}
+
+@media (max-height: 720px) and (min-width: 641px) {
+  .hero-content { padding-top: clamp(46px, 10vh, 82px); }
+}

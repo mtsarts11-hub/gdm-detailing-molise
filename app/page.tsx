@@ -334,7 +334,7 @@ export default function Home() {
           <p className="hero-ghost" aria-hidden="true">VDC</p>
           <div className="hero-car-light" aria-hidden="true" />
           <div className="hero-car-ground" aria-hidden="true" />
-          <img className="hero-car" src="/hero-vdetail-bmw-m4-v3.png" alt="BMW M4 azul de V Detail Center" />
+          <img className="hero-car" src="/hero-vdetail-porsche-panamera-2026-v1.png" alt="Porsche Panamera 2026 gris grafito de V Detail Center" />
           <div className="hero-sweep" aria-hidden="true" />
         </div>
       </section>
