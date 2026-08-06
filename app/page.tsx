@@ -42,7 +42,7 @@ const copy = {
     beforeEyebrow: "ANTES / DESPUÉS",
     beforeTitle: "El cambio se nota.",
     beforeText:
-      "Desliza para ver el mismo BMW antes, con suciedad ligera de uso, y después de su puesta a punto.",
+      "Desliza para ver el mismo Mercedes-AMG antes, con suciedad de carretera visible, y después de su puesta a punto.",
     beforeHint: "Desliza para comparar",
     beforeLabel: "Antes",
     afterLabel: "Después",
@@ -110,7 +110,7 @@ const copy = {
     beforeEyebrow: "BEFORE / AFTER",
     beforeTitle: "The difference is visible.",
     beforeText:
-      "Move the slider to see the same BMW before, with light everyday road dust, and after its professional refresh.",
+      "Move the slider to see the same Mercedes-AMG before, with visible road dirt, and after its professional refresh.",
     beforeHint: "Drag to compare",
     beforeLabel: "Before",
     afterLabel: "After",
@@ -296,7 +296,7 @@ export default function Home() {
       <section className="hero-frame" id="home">
         <header className="site-header">
           <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
-            <img src="/images/vdetail/vdetail-logo-wordmark.jpg" alt="V Detail Center" />
+            <img src="/images/vdetail/vdetail-logo-header.jpg" alt="V Detail Center" />
           </button>
           <nav className="desktop-nav" aria-label="Main navigation">
             {t.nav.map((item, index) => (
@@ -355,7 +355,7 @@ export default function Home() {
       </section>
 
       <section className="about-section section" id="about">
-        <div className="about-image-wrap" data-scroll-reveal><img src="/images/vdetail/vdetail-workshop.jpg" alt="Instalaciones de V Detail Center en Valladolid" /></div>
+        <div className="about-image-wrap" data-scroll-reveal><img src="/images/vdetail/vdetail-porsche-rear-about.jpg" alt="Porsche visto desde atrás en V Detail Center" /></div>
         <div className="about-copy" data-scroll-reveal>
           <p className="eyebrow">{t.aboutEyebrow}</p>
           <h2>{t.aboutTitle}</h2>
@@ -384,8 +384,8 @@ export default function Home() {
           <p>{t.beforeText}</p>
         </div>
         <div className="comparison-viewer" data-scroll-reveal>
-          <img className="comparison-image comparison-after" src="/images/vdetail/vdetail-bmw-turquoise-after.jpg" alt={language === "es" ? "BMW azul después de su puesta a punto en V Detail Center" : "Blue BMW after its V Detail Center refresh"} />
-          <img className="comparison-image comparison-before" src="/images/vdetail/vdetail-bmw-turquoise-before.jpg" alt="" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }} />
+          <img className="comparison-image comparison-after" src="/images/vdetail/gallery-mercedes-amg-green.jpg" alt={language === "es" ? "Mercedes-AMG verde después de su puesta a punto en V Detail Center" : "Green Mercedes-AMG after its V Detail Center refresh"} />
+          <img className="comparison-image comparison-before" src="/images/vdetail/vdetail-amg-green-before.jpg" alt="" style={{ clipPath: `inset(0 ${100 - comparisonPosition}% 0 0)` }} />
           <span className="comparison-label comparison-label-before">{t.beforeLabel}</span>
           <span className="comparison-label comparison-label-after">{t.afterLabel}</span>
           <div className="comparison-handle" style={{ left: `${comparisonPosition}%` }} aria-hidden="true"><span>↔</span></div>
@@ -415,7 +415,7 @@ export default function Home() {
           <p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p>
           <div className="contact-channels" aria-label={t.footerContact}>
             <a className="contact-channel instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-              <span className="contact-channel-icon"><img src="https://cdn.simpleicons.org/instagram/C13584" alt="" /></span>
+              <span className="contact-channel-icon"><img src="/icons/instagram.svg" alt="" /></span>
               <span><small>{t.footerInstagram}</small><strong>@vdetailcenter</strong></span><b aria-hidden="true">↗</b>
             </a>
             <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">
