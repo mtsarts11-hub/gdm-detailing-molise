@@ -558,7 +558,7 @@ body { background: #060607; }
 .brand {
   width: 92px;
   flex: 0 0 auto;
-  margin-right: clamp(28px, 3vw, 48px);
+  margin-right: clamp(18px, 2vw, 32px);
 }
 
 .brand img {
@@ -579,8 +579,8 @@ body { background: #060607; }
   background: transparent;
   color: rgba(255, 255, 255, .76);
   font-family: var(--font-dm-sans), Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1.2;
   transition: color .25s ease;
 }
@@ -590,8 +590,8 @@ body { background: #060607; }
   background: transparent;
   color: rgba(255, 255, 255, .76);
   font-family: var(--font-dm-sans), Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   line-height: 1.2;
   transition: color .25s ease;
 }
@@ -622,7 +622,7 @@ body { background: #060607; }
   border-radius: 1px;
   background: transparent;
   color: #fff;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: .11em;
   text-transform: uppercase;
@@ -729,9 +729,9 @@ body { background: #060607; }
 
 @media (max-width: 1100px) {
   .site-header { padding-right: 32px; padding-left: 32px; }
-  .brand { margin-right: 24px; }
+  .brand { margin-right: 18px; }
   .desktop-nav { gap: 20px; }
-  .desktop-nav button { font-size: 12px; }
+  .desktop-nav button { font-size: 13px; }
   .hero-content { left: clamp(48px, 7vw, 86px); width: min(43vw, 470px); }
   .hero-background img { object-position: 55% center; }
 }
