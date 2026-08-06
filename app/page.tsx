@@ -331,7 +331,7 @@ export default function Home() {
     <main ref={page} className="site-shell">
       <section className="hero-frame" id="home">
         <div className="hero-background" aria-hidden="true">
-          <img src="/images/vdetail/hero-cinematic-dark-sedan-v1.png" alt="" loading="eager" fetchPriority="high" decoding="async" />
+          <img src="/images/vdetail/hero-cinematic-mercedes-amg-c63-dark-blue-v2.png" alt="" loading="eager" fetchPriority="high" decoding="async" />
         </div>
         <div className="hero-overlay hero-overlay-horizontal" aria-hidden="true" />
         <div className="hero-overlay hero-overlay-top" aria-hidden="true" />
