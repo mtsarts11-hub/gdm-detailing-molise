@@ -414,17 +414,14 @@ export default function Home() {
         <div className="contact-heading" data-scroll-reveal>
           <p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p>
           <div className="contact-channels" aria-label={t.footerContact}>
-            <a className="contact-channel instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+            <a className="contact-channel instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label={t.footerInstagram} title={t.footerInstagram}>
               <span className="contact-channel-icon"><img src="/icons/instagram.svg" alt="" /></span>
-              <span><small>{t.footerInstagram}</small><strong>@vdetailcenter</strong></span><b aria-hidden="true">↗</b>
             </a>
-            <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">
+            <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" aria-label={t.footerWhatsapp} title={t.footerWhatsapp}>
               <span className="contact-channel-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" /></span>
-              <span><small>{t.footerWhatsapp}</small><strong>+34 611 57 76 41</strong></span><b aria-hidden="true">↗</b>
             </a>
-            <a className="contact-channel phone" href="tel:+34611577641">
+            <a className="contact-channel phone" href="tel:+34611577641" aria-label={t.footerPhone} title={t.footerPhone}>
               <span className="contact-channel-icon" aria-hidden="true">☎</span>
-              <span><small>{t.footerPhone}</small><strong>+34 611 57 76 41</strong></span><b aria-hidden="true">↗</b>
             </a>
           </div>
         </div>

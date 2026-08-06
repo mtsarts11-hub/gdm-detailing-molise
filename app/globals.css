@@ -377,3 +377,10 @@ body { background: #060607; }
     width: min(960px, 76vw);
   }
 }
+
+/* Contact shortcuts: icon-only, with the full description kept for assistive technology. */
+.contact-channels { display: flex; flex-wrap: wrap; max-width: none; gap: 12px; }
+.contact-channel { display: grid; width: 56px; min-height: 56px; place-items: center; padding: 0; border-radius: 16px; }
+.contact-channel:hover { transform: translateY(-3px); }
+.contact-channel-icon { width: 56px; height: 56px; border-radius: 16px; }
+.contact-channel-icon img { width: 25px; height: 25px; }
