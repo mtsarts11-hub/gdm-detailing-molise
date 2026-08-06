@@ -384,3 +384,26 @@ body { background: #060607; }
 .contact-channel:hover { transform: translateY(-3px); }
 .contact-channel-icon { width: 56px; height: 56px; border-radius: 16px; }
 .contact-channel-icon img { width: 25px; height: 25px; }
+
+/* Neutral studio treatment for the hero vehicle: no cyan cast, just controlled reflections and a grounded shadow. */
+.hero-car-light {
+  background: radial-gradient(ellipse at 50% 54%, rgba(255, 255, 255, .2) 0%, rgba(208, 211, 214, .11) 40%, rgba(208, 211, 214, 0) 74%);
+  opacity: .72;
+}
+.hero-car { filter: drop-shadow(0 28px 20px rgba(0, 0, 0, .68)) drop-shadow(-8px 6px 20px rgba(255, 255, 255, .08)); }
+.hero-car-ground { background: radial-gradient(ellipse at center, rgba(0, 0, 0, .76) 0%, rgba(0, 0, 0, .34) 48%, rgba(0, 0, 0, 0) 78%); }
+
+@media (min-width: 641px) {
+  .hero-car {
+    right: -220px;
+    width: clamp(1180px, 77vw, 1460px);
+  }
+
+  .hero-car-light {
+    right: -210px;
+    width: clamp(1180px, 77vw, 1460px);
+    height: 390px;
+  }
+
+  .hero-car-ground { width: clamp(980px, 66vw, 1210px); }
+}
