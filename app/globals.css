@@ -407,6 +407,7 @@ body { background: #060607; }
 .contact-channel:hover { border-color: transparent; background: transparent; box-shadow: none; opacity: 1; transform: translateY(-2px); }
 .contact-channel > svg { display: block; width: 27px; height: 27px; }
 .contact-channel.instagram { color: #d84983; }
+.contact-channel.whatsapp { color: #25d366; }
 .contact-channel.phone { color: #f1f1f1; }
 .contact-channel.phone > svg { width: 25px; height: 25px; }
 

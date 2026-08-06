@@ -457,9 +457,9 @@ export default function Home() {
               </svg>
             </a>
             <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" aria-label={t.footerWhatsapp}>
-              <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-                <circle cx="16" cy="16" r="15" fill="#25d366" />
-                <path fill="#fff" d="M23.6 8.4A10.4 10.4 0 0 0 7.2 20.9l-1.5 5.4 5.5-1.4a10.4 10.4 0 0 0 5 .1h.1A10.4 10.4 0 0 0 23.6 8.4Zm-7.4 14.8h-.1a8.6 8.6 0 0 1-4.4-1.2l-.3-.2-3.3.9.9-3.2-.2-.3a8.6 8.6 0 1 1 7.4 4Zm4.7-6.5c-.3-.1-1.5-.8-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.6.1a7 7 0 0 1-2.1-1.3 8 8 0 0 1-1.5-1.8c-.2-.3 0-.4.1-.6l.5-.5.2-.4c.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.5-.4-.7-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M20 11.3a8 8 0 0 1-11.72 7.05L4 19.6l1.27-4.1A8 8 0 1 1 20 11.3Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M9.2 8.3c.17-.4.33-.42.57-.42h.42c.13 0 .32.05.4.28l.66 1.57c.08.2.05.36-.08.52l-.38.47c-.12.14-.1.29 0 .42.3.52.8 1.2 1.7 1.64.14.07.26.06.37-.06l.47-.54c.14-.16.3-.2.5-.12l1.46.69c.2.1.29.22.26.43-.06.5-.38 1.16-.83 1.35-.37.16-.86.23-1.45.04-1.01-.33-2.55-1.28-3.66-2.67-1.06-1.32-1.53-2.55-1.48-3.24.04-.63.5-1.27.87-1.44Z" fill="currentColor" />
               </svg>
             </a>
             <a className="contact-channel phone" href="tel:+34611577641" aria-label={t.footerPhone}>
