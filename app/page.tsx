@@ -224,6 +224,8 @@ export default function Home() {
 
   useEffect(() => {
     let revealObserver: IntersectionObserver | undefined;
+    let processObserver: IntersectionObserver | undefined;
+    let removeProcessScroll: (() => void) | undefined;
     const context = gsap.context(() => {
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -287,9 +289,49 @@ export default function Home() {
       }, { threshold: 0.14, rootMargin: "0px 0px -7%" });
 
       blocks.forEach((block) => revealObserver?.observe(block));
+
+      const processTimeline = page.current?.querySelector<HTMLElement>("[data-process-timeline]");
+      const processProgress = processTimeline?.querySelector<HTMLElement>(".process-timeline-progress");
+      const processSteps = processTimeline ? Array.from(processTimeline.querySelectorAll<HTMLElement>("[data-process-step]")) : [];
+
+      if (processTimeline && processProgress && processSteps.length) {
+        gsap.set(processProgress, { scaleY: 0, transformOrigin: "top center" });
+        gsap.set(processSteps, { autoAlpha: 0, y: 28 });
+
+        const setProcessProgress = gsap.quickSetter(processProgress, "scaleY");
+        const updateProcessProgress = () => {
+          const rect = processTimeline.getBoundingClientRect();
+          const start = window.innerHeight * 0.8;
+          const lastMarker = Math.max(0, rect.height - 80);
+          const finish = window.innerHeight * 0.5 - lastMarker;
+          const distance = Math.max(1, start - finish);
+          const progress = Math.min(1, Math.max(0, (start - rect.top) / distance));
+          setProcessProgress(progress);
+        };
+
+        updateProcessProgress();
+        window.addEventListener("scroll", updateProcessProgress, { passive: true });
+        window.addEventListener("resize", updateProcessProgress);
+        removeProcessScroll = () => {
+          window.removeEventListener("scroll", updateProcessProgress);
+          window.removeEventListener("resize", updateProcessProgress);
+        };
+
+        processObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            gsap.to(entry.target, { autoAlpha: 1, y: 0, duration: 0.68, ease: "power3.out", overwrite: "auto" });
+            processObserver?.unobserve(entry.target);
+          });
+        }, { threshold: 0.34, rootMargin: "0px 0px -10%" });
+
+        processSteps.forEach((step) => processObserver?.observe(step));
+      }
     }, page);
     return () => {
       revealObserver?.disconnect();
+      processObserver?.disconnect();
+      removeProcessScroll?.();
       context.revert();
     };
   }, [language]);
@@ -430,9 +472,15 @@ export default function Home() {
       </section>
 
       <section className="process-section section" id="process">
-        <div className="section-intro compact-intro" data-scroll-reveal><p className="eyebrow">{t.processEyebrow}</p><div><h2>{t.processTitle}</h2></div></div>
-        <div className="process-list" data-scroll-stagger>
-          {steps.map((step) => <article key={step.number} className="process-step"><span>{step.number}</span><p>{language === "es" ? step.es : step.en}</p></article>)}
+        <div className="process-intro" data-scroll-reveal><p className="eyebrow">{t.processEyebrow}</p><h2>{t.processTitle}</h2></div>
+        <div className="process-timeline" data-process-timeline>
+          <span className="process-timeline-track" aria-hidden="true" />
+          <span className="process-timeline-progress" aria-hidden="true" />
+          {steps.map((step) => <article key={step.number} className="process-timeline-step" data-process-step>
+            <span className="process-timeline-marker" aria-hidden="true" />
+            <span className="process-timeline-number">{step.number}</span>
+            <p>{language === "es" ? step.es : step.en}</p>
+          </article>)}
         </div>
       </section>
 
