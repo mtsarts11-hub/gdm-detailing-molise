@@ -296,7 +296,7 @@ export default function Home() {
       <section className="hero-frame" id="home">
         <header className="site-header">
           <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
-            <img src="/images/vdetail/vdetail-logo-header.jpg" alt="V Detail Center" />
+            <img src="/images/vdetail/vdetail-logo-transparent.png" alt="V Detail Center" />
           </button>
           <nav className="desktop-nav" aria-label="Main navigation">
             {t.nav.map((item, index) => (
@@ -440,7 +440,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-grid">
           <div className="footer-intro">
-            <img className="footer-logo" src="/images/vdetail/vdetail-logo-wordmark.jpg" alt="V Detail Center" />
+            <img className="footer-logo" src="/images/vdetail/vdetail-logo-transparent.png" alt="V Detail Center" />
             <p>{t.footerIntro}</p>
             <a className="button button-primary footer-book" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
           </div>

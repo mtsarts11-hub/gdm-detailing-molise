@@ -291,3 +291,49 @@ h1 { color: #f2f7f9; }
 @media (max-width: 900px) { .hero-car { bottom: 7.5%; } }
 @media (max-width: 640px) { .brand { width: 62px; }.brand img { width: 62px; height: 60px; }.hero-car { bottom: 3.5%; } }
 @media (max-width: 390px) { .hero-car { bottom: 2.8%; } }
+
+/* Neutral off-black pass and complete transparent branding. */
+:root { --navy: #0a0a0b; --ice: #19191b; --offwhite: #101011; --ink: #f1f1f1; --muted: #a5a5a8; --line: rgba(255, 255, 255, .12); }
+body { background: #060607; }
+.site-shell { background: #101011; }
+.hero-frame { background: radial-gradient(circle at 75% 44%, #242426 0%, #121214 40%, #09090a 78%); }
+.site-header { border-bottom-color: rgba(255, 255, 255, .1); background: rgba(7, 7, 8, .9); }
+.brand { width: 74px; }
+.brand img { width: 74px; height: 70px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .42)); }
+.button-ghost { border-color: rgba(255, 255, 255, .23); background: rgba(18, 18, 20, .72); }
+.button-ghost:hover { background: rgba(34, 34, 37, .9); }
+.hero-grid span { border-color: rgba(255, 255, 255, .08); }
+.hero-ghost { color: #1b1b1d; }
+.hero-car-light { background: radial-gradient(ellipse at 50% 52%, rgba(255, 255, 255, .12) 0%, rgba(93, 180, 208, .08) 42%, rgba(93, 180, 208, 0) 74%); }
+.hero-car { bottom: max(50px, 10%); }
+.hero-car-ground { bottom: max(34px, 8%); }
+.hero-sweep { background: #080809; }
+.expand-button, .service-item { background: #18181a; }
+.expand-button:hover { background: #222225; }
+.about-image-wrap, .comparison-viewer, .map-wrap { background: #151517; }
+.gallery-item { background: #1a1a1d; }
+.gallery-item span { background: rgba(15, 15, 17, .9); }
+.comparison-label { background: rgba(10, 10, 11, .84); }
+.contact-form, .contact-channel { background: #18181a; }
+.contact-form input, .contact-form textarea { border-color: rgba(255, 255, 255, .18); background: #0e0e0f; }
+.contact-form input:hover, .contact-form textarea:hover { background: #131315; }
+.contact-channel-icon { background: #242427; }
+.contact-channel.phone .contact-channel-icon { background: #202225; }
+.site-footer { background: #050506; }
+.footer-grid { border-color: rgba(255, 255, 255, .12); }
+.footer-logo { width: 176px; height: auto; margin: 0 0 13px; filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .32)); }
+.mobile-menu, .menu-button { background: #131315; }
+
+@media (max-width: 900px) { .hero-car { bottom: max(38px, 8%); }.hero-car-ground { bottom: max(27px, 6.5%); } }
+@media (max-width: 640px) { .brand { width: 62px; }.brand img { width: 62px; height: 60px; }.hero-car { bottom: max(28px, 4.6%); }.hero-car-ground { bottom: max(22px, 3.4%); } }
+@media (max-width: 390px) { .hero-car { bottom: 25px; }.hero-car-ground { bottom: 20px; } }
+
+@media (max-height: 720px) and (min-width: 641px) {
+  .hero-content { padding-top: clamp(30px, 7vh, 64px); padding-bottom: 34px; }
+  .hero-copy h1 { margin-bottom: 14px; font-size: min(4.45rem, 15vh); }
+  .hero-description { margin-bottom: 20px; line-height: 1.5; }
+  .hero-trust { margin-top: 20px; }
+  .hero-car { width: min(780px, 135vh); bottom: max(26px, 7vh); }
+  .hero-car-light { width: min(780px, 135vh); bottom: max(31px, 8vh); }
+  .hero-car-ground { width: min(670px, 116vh); bottom: max(20px, 5vh); }
+}
