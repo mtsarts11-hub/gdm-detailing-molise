@@ -204,27 +204,63 @@ export default function Home() {
   const [comparisonPosition, setComparisonPosition] = useState(50);
   const page = useRef<HTMLElement>(null);
   const t = copy[language];
+  const headerNavItems = language === "es"
+    ? [
+        { label: "Inicio", target: "home" },
+        { label: "Galería", target: "gallery" },
+        { label: "Nosotros", target: "about" },
+        { label: "Contacto", target: "contact" },
+      ]
+    : [
+        { label: "Home", target: "home" },
+        { label: "Gallery", target: "gallery" },
+        { label: "About", target: "about" },
+        { label: "Contact", target: "contact" },
+      ];
+  const heroDescription = language === "es"
+    ? "Protección cerámica, PPF y corrección de pintura."
+    : "Ceramic protection, PPF and paint correction.";
+  const heroCta = language === "es" ? "Descubrir servicios" : "Discover services";
 
   useEffect(() => {
     let revealObserver: IntersectionObserver | undefined;
     const context = gsap.context(() => {
-      gsap.fromTo(
-        ".hero-copy > *",
-        { autoAlpha: 0, y: 20 },
-        { autoAlpha: 1, y: 0, duration: 0.68, stagger: 0.1, ease: "power3.out", delay: 0.12 },
-      );
-      gsap.fromTo(
-        ".hero-car",
-        { autoAlpha: 0, x: 52, scale: 1.025 },
-        { autoAlpha: 1, x: 0, scale: 1, duration: 1.05, ease: "power3.out", delay: 0.18 },
-      );
-      gsap.fromTo(
-        ".hero-sweep",
-        { scaleX: 0, transformOrigin: "right center" },
-        { scaleX: 1, duration: 0.9, ease: "power3.out", delay: 0.35 },
-      );
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (!reduceMotion) {
+        gsap.timeline()
+          .fromTo(
+            ".hero-background img",
+            { autoAlpha: 0, scale: 1.03 },
+            { autoAlpha: 1, scale: 1, duration: 0.95, ease: "power3.out" },
+          )
+          .fromTo(
+            ".site-header > *",
+            { autoAlpha: 0, y: -10 },
+            { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.06, ease: "power3.out" },
+            0.12,
+          )
+          .fromTo(
+            ".hero-title-line",
+            { autoAlpha: 0, y: 28 },
+            { autoAlpha: 1, y: 0, duration: 0.82, stagger: 0.08, ease: "power3.out" },
+            0.22,
+          )
+          .fromTo(
+            ".hero-description",
+            { autoAlpha: 0, y: 18 },
+            { autoAlpha: 1, y: 0, duration: 0.72, ease: "power3.out" },
+            0.52,
+          )
+          .fromTo(
+            ".hero-primary-cta",
+            { autoAlpha: 0, y: 16 },
+            { autoAlpha: 1, y: 0, duration: 0.72, ease: "power3.out" },
+            0.66,
+          );
+      }
+
+      if (reduceMotion) return;
 
       const revealBlocks = gsap.utils.toArray<HTMLElement>("[data-scroll-reveal]");
       const staggerBlocks = gsap.utils.toArray<HTMLElement>("[data-scroll-stagger]");
@@ -294,13 +330,19 @@ export default function Home() {
   return (
     <main ref={page} className="site-shell">
       <section className="hero-frame" id="home">
+        <div className="hero-background" aria-hidden="true">
+          <img src="/images/vdetail/hero-cinematic-dark-sedan-v1.png" alt="" loading="eager" fetchPriority="high" decoding="async" />
+        </div>
+        <div className="hero-overlay hero-overlay-horizontal" aria-hidden="true" />
+        <div className="hero-overlay hero-overlay-top" aria-hidden="true" />
+        <div className="hero-overlay hero-overlay-vignette" aria-hidden="true" />
         <header className="site-header">
           <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
             <img src="/images/vdetail/vdetail-logo-transparent.png" alt="V Detail Center" />
           </button>
           <nav className="desktop-nav" aria-label="Main navigation">
-            {t.nav.map((item, index) => (
-              <button key={item} onClick={() => scrollTo(navTargets[index])}>{item}</button>
+            {headerNavItems.map((item) => (
+              <button key={item.target} onClick={() => scrollTo(item.target)}>{item.label}</button>
             ))}
           </nav>
           <div className="header-actions">
@@ -309,33 +351,26 @@ export default function Home() {
               <span>/</span>
               <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
             </div>
-            <a className="button button-primary header-book" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
+            <a className="header-appointment" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book}</a>
             <button className="menu-button" aria-label={t.menu} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
               <i /><i />
             </button>
           </div>
         </header>
         <div className={menuOpen ? "mobile-menu is-open" : "mobile-menu"}>
-          {t.nav.map((item, index) => <button key={item} onClick={() => scrollTo(navTargets[index])}>{item}</button>)}
-          <a href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} ↗</a>
+          {headerNavItems.map((item) => <button key={item.target} onClick={() => scrollTo(item.target)}>{item.label}</button>)}
+          <a href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book}</a>
         </div>
-        <div className="hero-grid" aria-hidden="true"><span /><span /><span /><span /><span /><span /></div>
         <div className="hero-content">
           <div className="hero-copy">
-            <p className="eyebrow hero-eyebrow">{t.eyebrow}</p>
-            <h1>{language === "es" ? <>El detalle que tu <span className="hero-mobile-break">vehículo merece.</span></> : t.heroTitle}</h1>
-            <p className="hero-description">{t.heroText}</p>
-            <div className="hero-buttons">
-              <a className="button button-primary" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book} <span>↗</span></a>
-              <button className="button button-ghost" onClick={() => scrollTo("services")}>{t.servicesCta} <span>↓</span></button>
-            </div>
-            <p className="hero-trust">{t.serviceIntro}</p>
+            <h1 className="hero-title">
+              <span className="hero-title-line">Detailing</span>
+              <span className="hero-title-line">Premium</span>
+              <span className="hero-title-line">Valladolid</span>
+            </h1>
+            <p className="hero-description">{heroDescription}</p>
+            <button className="hero-primary-cta" onClick={() => scrollTo("services")}>{heroCta}</button>
           </div>
-          <p className="hero-ghost" aria-hidden="true">VDC</p>
-          <div className="hero-car-light" aria-hidden="true" />
-          <div className="hero-car-ground" aria-hidden="true" />
-          <img className="hero-car" src="/hero-vdetail-porsche-panamera-2026-v2.png" alt="Porsche Panamera 2026 gris grafito de V Detail Center" />
-          <div className="hero-sweep" aria-hidden="true" />
         </div>
       </section>
 
