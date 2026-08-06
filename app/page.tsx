@@ -451,7 +451,7 @@ export default function Home() {
       </section>
 
       <section className="about-section section" id="about">
-        <div className="about-image-wrap" data-scroll-reveal><img src="/images/vdetail/vdetail-porsche-rear-about.jpg" alt="Porsche visto desde atrás en V Detail Center" /></div>
+        <div className="about-image-wrap" data-scroll-reveal><img className="about-detailing-image" src="/images/vdetail/vdetail-about-detailing-professional.jpg" alt={language === "es" ? "Profesional de V Detail Center secando un vehículo negro" : "V Detail Center professional drying a black vehicle"} /></div>
         <div className="about-copy" data-scroll-reveal>
           <p className="eyebrow">{t.aboutEyebrow}</p>
           <h2>{t.aboutTitle}</h2>
