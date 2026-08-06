@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "VDetail Display";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/barlow-condensed-700-latin.woff2") format("woff2");
+}
+
 :root { --blue: #1269c7; --navy: #102c52; --ice: #deeffc; --offwhite: #f8fbfe; --ink: #14243a; --muted: #617083; --line: #dfe8f0; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -561,7 +569,7 @@ body { background: #060607; }
   max-width: 520px;
   margin: 0;
   color: #fff;
-  font-family: var(--font-barlow-condensed), "Arial Narrow", Arial, sans-serif;
+  font-family: "VDetail Display", "Arial Narrow", Arial, sans-serif;
   font-size: clamp(52px, 4.8vw, 76px);
   font-weight: 700;
   letter-spacing: -.04em;
