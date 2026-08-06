@@ -8,7 +8,9 @@ type Language = "it" | "en";
 const BOOKING_URL = "https://simplybook.me/";
 const WHATSAPP_NUMBER = "393209745901";
 const MAP_URL =
-  "https://www.google.com/maps/place/GDM+DETAILING/@41.5978336,14.2337013,14z/";
+  "https://www.google.com/maps/search/?api=1&query=Ad+Agnone+Auto+Service%2C+Viale+Castelnuovo+69%2C+Montenero+di+Bisaccia";
+const MAP_EMBED_URL =
+  "https://www.google.com/maps?q=Ad+Agnone+Auto+Service%2C+Viale+Castelnuovo+69%2C+Montenero+di+Bisaccia&z=16&output=embed";
 
 const copy = {
   it: {
@@ -382,7 +384,7 @@ export default function Home() {
           <div className="rating"><strong>5,0</strong><span>★★★★★</span><small>Google · 2 recensioni</small></div>
           <a className="text-link" href={MAP_URL} target="_blank" rel="noreferrer">{t.mapLink} <span>↗</span></a>
         </div>
-        <div className="map-wrap" data-scroll-reveal><iframe title="GDM Detailing location" src="https://www.google.com/maps?q=41.5978336,14.2337013&z=14&output=embed" loading="lazy" /></div>
+        <div className="map-wrap" data-scroll-reveal><iframe title="Ad Agnone Auto Service, Viale Castelnuovo 69, Montenero di Bisaccia" src={MAP_EMBED_URL} loading="lazy" /></div>
       </section>
 
       <section className="contact-section section" id="contact">
