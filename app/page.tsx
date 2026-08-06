@@ -296,15 +296,14 @@ export default function Home() {
       const processSteps = processTimeline ? Array.from(processTimeline.querySelectorAll<HTMLElement>("[data-process-step]")) : [];
 
       if (processTimeline && processProgress && processSteps.length) {
-        gsap.set(processProgress, { scaleY: 0, transformOrigin: "top center" });
+        gsap.set(processProgress, { scaleX: 0, transformOrigin: "left center" });
         gsap.set(processSteps, { autoAlpha: 0, y: 28 });
 
-        const setProcessProgress = gsap.quickSetter(processProgress, "scaleY");
+        const setProcessProgress = gsap.quickSetter(processProgress, "scaleX");
         const updateProcessProgress = () => {
           const rect = processTimeline.getBoundingClientRect();
-          const start = window.innerHeight * 0.8;
-          const lastMarker = Math.max(0, rect.height - 80);
-          const finish = window.innerHeight * 0.5 - lastMarker;
+          const start = window.innerHeight * 0.82;
+          const finish = window.innerHeight * 0.28;
           const distance = Math.max(1, start - finish);
           const progress = Math.min(1, Math.max(0, (start - rect.top) / distance));
           setProcessProgress(progress);
@@ -347,7 +346,7 @@ export default function Home() {
     if (!hero) return;
 
     const updateHeaderPin = () => {
-      const nextPinned = hero.getBoundingClientRect().bottom <= 0;
+      const nextPinned = hero.getBoundingClientRect().top < 0;
       setHeaderPinned((current) => current === nextPinned ? current : nextPinned);
     };
 
@@ -389,7 +388,33 @@ export default function Home() {
   const visibleGallery = galleryExpanded ? gallery : gallery.slice(0, GALLERY_PREVIEW_COUNT);
 
   return (
-    <main ref={page} className="site-shell">
+    <>
+      <header className={headerPinned ? "site-header is-pinned" : "site-header"}>
+        <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
+          <img src="/images/vdetail/vdetail-logo-transparent.png" alt="V Detail Center" />
+        </button>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {headerNavItems.map((item) => (
+            <button key={item.target} onClick={() => scrollTo(item.target)}>{item.label}</button>
+          ))}
+        </nav>
+        <div className="header-actions">
+          <div className="language-switch" aria-label="Language selector">
+            <button className={language === "es" ? "active" : ""} onClick={() => setLanguage("es")}>ES</button>
+            <span>/</span>
+            <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
+          </div>
+          <a className="header-appointment" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book}</a>
+          <button className="menu-button" aria-label={t.menu} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
+            <i /><i />
+          </button>
+        </div>
+      </header>
+      <div className={menuOpen ? "mobile-menu is-open" : "mobile-menu"}>
+        {headerNavItems.map((item) => <button key={item.target} onClick={() => scrollTo(item.target)}>{item.label}</button>)}
+        <a href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book}</a>
+      </div>
+      <main ref={page} className="site-shell">
       <section className="hero-frame" id="home">
         <div className="hero-background" aria-hidden="true">
           <img src="/images/vdetail/hero-cinematic-mercedes-amg-c63-dark-blue-v2.png" alt="" loading="eager" fetchPriority="high" decoding="async" />
@@ -397,31 +422,6 @@ export default function Home() {
         <div className="hero-overlay hero-overlay-horizontal" aria-hidden="true" />
         <div className="hero-overlay hero-overlay-top" aria-hidden="true" />
         <div className="hero-overlay hero-overlay-vignette" aria-hidden="true" />
-        <header className={headerPinned ? "site-header is-pinned" : "site-header"}>
-          <button className="brand" aria-label="V Detail Center home" onClick={() => scrollTo("home")}>
-            <img src="/images/vdetail/vdetail-logo-transparent.png" alt="V Detail Center" />
-          </button>
-          <nav className="desktop-nav" aria-label="Main navigation">
-            {headerNavItems.map((item) => (
-              <button key={item.target} onClick={() => scrollTo(item.target)}>{item.label}</button>
-            ))}
-          </nav>
-          <div className="header-actions">
-            <div className="language-switch" aria-label="Language selector">
-              <button className={language === "es" ? "active" : ""} onClick={() => setLanguage("es")}>ES</button>
-              <span>/</span>
-              <button className={language === "en" ? "active" : ""} onClick={() => setLanguage("en")}>EN</button>
-            </div>
-            <a className="header-appointment" href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book}</a>
-            <button className="menu-button" aria-label={t.menu} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
-              <i /><i />
-            </button>
-          </div>
-        </header>
-        <div className={menuOpen ? "mobile-menu is-open" : "mobile-menu"}>
-          {headerNavItems.map((item) => <button key={item.target} onClick={() => scrollTo(item.target)}>{item.label}</button>)}
-          <a href={BOOKING_URL} target="_blank" rel="noreferrer">{t.book}</a>
-        </div>
         <div className="hero-content">
           <div className="hero-copy">
             <h1 className="hero-title">
@@ -587,5 +587,6 @@ export default function Home() {
         <button className="lightbox-nav next" onClick={() => setActiveImage((activeImage + 1) % gallery.length)} aria-label={t.next}>→</button>
       </div>}
     </main>
+    </>
   );
 }
