@@ -449,14 +449,23 @@ export default function Home() {
         <div className="contact-heading" data-scroll-reveal>
           <p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p>
           <div className="contact-channels" aria-label={t.footerContact}>
-            <a className="contact-channel instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label={t.footerInstagram} title={t.footerInstagram}>
-              <span className="contact-channel-icon"><img src="/icons/instagram.svg" alt="" /></span>
+            <a className="contact-channel instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label={t.footerInstagram}>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="2" />
+                <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
+                <circle cx="17.4" cy="6.8" r="1.15" fill="currentColor" />
+              </svg>
             </a>
-            <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" aria-label={t.footerWhatsapp} title={t.footerWhatsapp}>
-              <span className="contact-channel-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" /></span>
+            <a className="contact-channel whatsapp" href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer" aria-label={t.footerWhatsapp}>
+              <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <circle cx="16" cy="16" r="15" fill="#25d366" />
+                <path fill="#fff" d="M23.6 8.4A10.4 10.4 0 0 0 7.2 20.9l-1.5 5.4 5.5-1.4a10.4 10.4 0 0 0 5 .1h.1A10.4 10.4 0 0 0 23.6 8.4Zm-7.4 14.8h-.1a8.6 8.6 0 0 1-4.4-1.2l-.3-.2-3.3.9.9-3.2-.2-.3a8.6 8.6 0 1 1 7.4 4Zm4.7-6.5c-.3-.1-1.5-.8-1.8-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.6.1a7 7 0 0 1-2.1-1.3 8 8 0 0 1-1.5-1.8c-.2-.3 0-.4.1-.6l.5-.5.2-.4c.1-.2 0-.4 0-.5l-.8-1.9c-.2-.5-.5-.4-.7-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z" />
+              </svg>
             </a>
-            <a className="contact-channel phone" href="tel:+34611577641" aria-label={t.footerPhone} title={t.footerPhone}>
-              <span className="contact-channel-icon" aria-hidden="true">☎</span>
+            <a className="contact-channel phone" href="tel:+34611577641" aria-label={t.footerPhone}>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.8a2 2 0 0 1-.45 2.11L8.07 9.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.55 2.8.68A2 2 0 0 1 22 16.92Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
           </div>
         </div>
